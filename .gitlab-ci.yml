@@ -1,0 +1,10 @@
+stages:
+  - "Tests"
+
+Unit tests:
+  stage: "Tests"
+  image: node:23.5.0-alpine
+  before_script:
+    - npm install
+  script:
+    - npm run test
