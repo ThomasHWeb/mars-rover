@@ -14,6 +14,10 @@ export default () => {
 
   const initializeMonitor = (input: string): MonitorInterface => {
     const [width, height] = input.split(" ").map(Number);
+    if (isNaN(width) || isNaN(height)) {
+      throw new Error("Values must be numbers");
+    }
+
     if (width < 0 || height < 0) {
       throw new Error("Values must be greater than 0");
     }
@@ -59,28 +63,30 @@ export default () => {
   rl.question(
     "Enter new world size (width, height): ",
     (input: string): void => {
-      monitor = initializeMonitor(input);
+      try {
+        monitor = initializeMonitor(input);
 
-      rl.question(
-        "Enter robot position, direction and commands (x, y, D) FLR: ",
-        (input: string): void => {
-          try {
-            const inputDTO = new Input(input, monitor.getWorld());
-            createAndAddRobot(inputDTO);
+        rl.question(
+          "Enter robot position, direction and commands (x, y, D) FLR: ",
+          (input: string): void => {
+            try {
+              const inputDTO = new Input(input, monitor.getWorld());
+              createAndAddRobot(inputDTO);
 
-            const robot = moveRobotAndFindIt(
-              inputDTO.getPosition(),
-              inputDTO.getCommands(),
-            );
+              const robot = moveRobotAndFindIt(
+                inputDTO.getPosition(),
+                inputDTO.getCommands(),
+              );
 
-            console.log(createResponse(robot, inputDTO));
-          } catch (error) {
-            console.error(error instanceof Error ? error.message : error);
-          }
-
-          rl.close();
-        },
-      );
+              console.log(createResponse(robot, inputDTO));
+            } catch (error) {
+              console.error(error instanceof Error ? error.message : error);
+            }
+          },
+        );
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : error);
+      }
     },
   );
 };
