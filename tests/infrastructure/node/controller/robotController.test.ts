@@ -31,7 +31,6 @@ describe("Robot Controller", () => {
 
     ReadlineMock = {
       question: jest.fn(),
-      close: jest.fn(),
     };
     (readline.createInterface as jest.Mock).mockReturnValue(ReadlineMock);
     (Monitor as jest.Mock).mockReturnValue(monitorMock);
