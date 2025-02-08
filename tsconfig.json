@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "outDir": "dist",
-    "types": ["node", "jest"],
+    "types": ["node", "jsdom", "jest"],
     "baseUrl": ".",
     "paths": {
       "@domain/*": ["src/domain/*"],
